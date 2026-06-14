@@ -2,6 +2,7 @@
 raw_data/
 logos/
 procesados/
+.vscode/
 
 ### macOS ###
 # General
