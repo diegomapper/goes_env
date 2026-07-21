@@ -1,17 +1,19 @@
-# 🛰️ Sistema de Procesamiento y Estandarización de Imágenes Satelitales GOES-19 para SENAMHI-Bolivia (Versión 1.0)
+# Sistema de Procesamiento y Estandarización de Imágenes Satelitales GOES-19 para SENAMHI-Bolivia (Versión 1.0)
 
-Este repositorio contiene la **suite operativa de scripts en Python** desarrollada para la descarga autónoma, calibración física, reproyección y maquetación automatizada de productos de la nueva generación de satélites **GOES-19 (East)**, optimizados específicamente para el territorio del Estado Plurinacional de Bolivia.
+Este repositorio contiene la **suite operativa de scripts en Python** desarrollada para la descarga autónoma, calibración física y maquetación automatizada de productos de la nueva generación de satélites **GOES-19 (East)**, optimizados específicamente para el territorio del Estado Plurinacional de Bolivia.
 
-El proyecto nace con el objetivo de dotar a los pronosticadores del **SENAMHI** de productos visuales con un estándar de diseño unificado, colineal y de alta definición, eliminando la dependencia de servidores externos y procesando los datos directamente de la fuente cruda (*NetCDF L2 MCMIPF* de la NOAA).
+El proyecto nace con el objetivo de dotar a los pronosticadores del **SENAMHI** de productos visuales con un estándar de diseño unificado, colineal y de alta definición, eliminando la dependencia de servidores externos y procesando los datos directamente de la fuente cruda (*NetCDF L2 MCMIPF* de la NOAA). 
+
+Los productos también pueden ser compartidos en redes sociales, dependiendo del evento meteorológico que se presente, ya sea el ingreso de un frente frío, una masa de aire seco que trae cielo despejado al oriente, precipitaciones en la amazonía en temporada de lluvias. Estos productos visuales sirven para dinamizar el contenido técnico que es compartido en las páginas oficiales del SENAMHI Bolivia, al nivel de otros servicios meteorológicos. 
 
 ---
 
-## 📌 Objetivos Estratégicos y Valor Operativo
+## Objetivos Estratégicos y Valor Operativo
 
 * **Autonomía de Datos:** Conexión directa y descarga automatizada de datos en tiempo real desde el bucket público de Amazon Web Services (AWS S3) de la NOAA.
 * **Calibración Física Avanzada:** Los visualizadores no son meras ilustraciones artísticas. Cada píxel se procesa bajo ecuaciones físicas de Reflectancia (%) para canales visibles e infrarrojos cercanos, y Temperatura de Brillo (°C) para canales térmicos.
 * **Identificación en Zonas Complejas:** Ajuste de algoritmos multiespectrales (RGB) para discriminar eventos meteorológicos críticos en la compleja topografía boliviana (Altiplano, Valles y Llanos Orientales).
-* **Maquetación Institucional Homogénea (Borderless):** Diseño simétrico donde la imagen satelital se despliega cubriendo el 100% del lienzo útil (*borderless*), alineando horizontalmente la simbología institucional con la geografía nacional.
+* **Maquetación Institucional Homogénea:** Diseño simétrico donde la imagen satelital se despliega cubriendo casi la totalidad del lienzo útil, alineando horizontalmente la simbología con la imagen y los logos gubernamentales e institucionales.
 
 ---
 
@@ -21,8 +23,9 @@ A continuación se detallan los cuatro productos desarrollados bajo el estándar
 
 ### 1. Infrarrojo Limpio (Canal 13 - 10.3 µm)
 * **Propósito:** Monitoreo térmico continuo (24/7) para la identificación de topes de nubes frías y sistemas convectivos de mesoescala productores de precipitaciones intensas.
-* **Especificaciones Técnicas:** Calibrado en Temperatura de Brillo (°C) bajo la paleta de colores operativa estándar del SENAMHI, extendiéndose desde $-90^\circ\text{C}$ (convección extrema) hasta $+40^\circ\text{C}$ (superficies cálidas).
+* **Especificaciones Técnicas:** Calibrado en Temperatura de Brillo (°C) bajo la paleta de colores operativa estándar del SENAMHI, extendiéndose desde $-90^\circ\text{C}$ (convección profunda) hasta $+40^\circ\text{C}$ (superficies cálidas).
 * **Simbología:** Barra de escala térmica unificada en el borde inferior colineal.
+![Producto Infrarrojo](assets/goes19_infrarrojo.png)
 
 ### 2. Vapor de Agua en Troposfera Alta (Canal 08 - 6.2 µm)
 * **Propósito:** Análisis de la dinámica de la alta troposfera, identificación de corrientes en chorro (Jet Streams), localización de vaguadas/dorsales y detección de zonas de subsidencia seca o advección de humedad.
