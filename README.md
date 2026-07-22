@@ -1,20 +1,10 @@
-<!-- CABECERA INSTITUCIONAL -->
-<table width="100%" border="0" style="border-collapse: collapse; border: none;">
-  <tr>
-    <!-- Logo Ministerio (Izquierda) -->
-    <td align="left" valign="middle" width="40%" style="border: none;">
-      <img src="assets/logo_ministerio.png" alt="Ministerio de Desarrollo Productivo Rural y Agua" height="60px">
-    </td>
-    <!-- Espaciador Central -->
-    <td align="center" valign="middle" width="20%" style="border: none;">
-      <!-- Espacio vacío central para mantener balance -->
-    </td>
-    <!-- Logo SENAMHI (Derecha) -->
-    <td align="right" valign="middle" width="50%" style="border: none;">
-      <img src="assets/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
-    </td>
-  </tr>
-</table>
+<!-- HEAD -->
+<p align="center" style="display: flex; justify-content: space-between; align-items: center; border: none; background: none;">
+  <img src="assets/logo_ministerio.png" height="55" alt="Ministerio de Medio Ambiente y Agua"/>
+  <img src="assets/logo_senamhi.png" height="55" alt="SENAMHI Bolivia"/>
+</p>
+
+<br>
 
 ---
 # Sistema de Procesamiento y Estandarización de Imágenes Satelitales GOES-19 para SENAMHI-Bolivia (Versión 1.0)
