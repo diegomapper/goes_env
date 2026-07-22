@@ -1,16 +1,16 @@
-<!-- CABECERA INSTITUCIONAL REPOSITORY -->
+<!-- CABECERA INSTITUCIONAL -->
 <table width="100%" border="0" style="border-collapse: collapse; border: none;">
   <tr>
     <!-- Logo Ministerio (Izquierda) -->
-    <td align="left" valign="middle" width="30%" style="border: none;">
+    <td align="left" valign="middle" width="40%" style="border: none;">
       <img src="assets/logo_ministerio.png" alt="Ministerio de Desarrollo Productivo Rural y Agua" height="60px">
     </td>
     <!-- Espaciador Central -->
-    <td align="center" valign="middle" width="40%" style="border: none;">
+    <td align="center" valign="middle" width="20%" style="border: none;">
       <!-- Espacio vacío central para mantener balance -->
     </td>
     <!-- Logo SENAMHI (Derecha) -->
-    <td align="right" valign="middle" width="30%" style="border: none;">
+    <td align="right" valign="middle" width="50%" style="border: none;">
       <img src="assets/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
     </td>
   </tr>
