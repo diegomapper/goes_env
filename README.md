@@ -1,9 +1,8 @@
 <!-- HEAD -->
-<p align="center" style="display: flex; justify-content: space-between; align-items: center; border: none; background: none;">
-  <img src="assets/logo_ministerio.png" height="55" alt="Ministerio de Medio Ambiente y Agua"/>
-  <img src="assets/logo_senamhi.png" height="55" alt="SENAMHI Bolivia"/>
-</p>
-
+<section align="center" style="display: flex; justify-content: space-between; align-items: center; border: none; background: none;">
+  <img src="assets/logo_ministerio.png" height="100" alt="Ministerio de Medio Ambiente y Agua"/>
+  <img src="assets/logo_senamhi.png" height="100" alt="SENAMHI Bolivia"/>
+</section>
 <br>
 
 ---
