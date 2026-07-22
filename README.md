@@ -11,7 +11,7 @@
     </td>
     <!-- Logo SENAMHI (Derecha) -->
     <td align="right" valign="middle" width="30%" style="border: none;">
-      <img src="assets/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
+      <img src="logos/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
     </td>
   </tr>
 </table>
@@ -83,8 +83,8 @@ Todos los scripts comparten una arquitectura de renderizado simétrico que garan
 
 ## Requisitos e Instalación
 
-La suite está construida enteramente sobre un entorno de programación en Python.
+El entorno está construida enteramente sobre un entorno de programación en Python.
 
 ```bash
-# Dependencias científicas principales
+# Librerías principales
 pip install numpy matplotlib xarray cartopy s3fs scipy netcdf4
