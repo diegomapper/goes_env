@@ -3,7 +3,7 @@
   <tr>
     <!-- Logo Ministerio (Izquierda) -->
     <td align="left" valign="middle" width="30%" style="border: none;">
-      <img src="./logos/logo_ministerio.png" alt="Ministerio de Desarrollo Productivo Rural y Agua" height="60px">
+      <img src="assets/logo_ministerio.png" alt="Ministerio de Desarrollo Productivo Rural y Agua" height="60px">
     </td>
     <!-- Espaciador Central -->
     <td align="center" valign="middle" width="40%" style="border: none;">
@@ -11,7 +11,7 @@
     </td>
     <!-- Logo SENAMHI (Derecha) -->
     <td align="right" valign="middle" width="30%" style="border: none;">
-      <img src="./logos/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
+      <img src="assets/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
     </td>
   </tr>
 </table>
