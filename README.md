@@ -1,6 +1,25 @@
+<!-- CABECERA INSTITUCIONAL REPOSITORY -->
+<table width="100%" border="0" style="border-collapse: collapse; border: none;">
+  <tr>
+    <!-- Logo Ministerio (Izquierda) -->
+    <td align="left" valign="middle" width="30%" style="border: none;">
+      <img src="logos/logo_ministerio.png" alt="Ministerio de Desarrollo Productivo Rural y Agua" height="60px">
+    </td>
+    <!-- Espaciador Central -->
+    <td align="center" valign="middle" width="40%" style="border: none;">
+      <!-- Espacio vacío central para mantener balance -->
+    </td>
+    <!-- Logo SENAMHI (Derecha) -->
+    <td align="right" valign="middle" width="30%" style="border: none;">
+      <img src="assets/logo_senamhi.png" alt="SENAMHI Bolivia" height="60px">
+    </td>
+  </tr>
+</table>
+
+---
 # Sistema de Procesamiento y Estandarización de Imágenes Satelitales GOES-19 para SENAMHI-Bolivia (Versión 1.0)
 
-Este repositorio contiene la **suite operativa de scripts en Python** desarrollada para la descarga autónoma, calibración física y maquetación automatizada de productos de la nueva generación de satélites **GOES-19 (East)**, optimizados específicamente para el territorio del Estado Plurinacional de Bolivia.
+Este repositorio contiene el **entorno operativo de scripts en Python** desarrollado para la descarga autónoma, calibración física y maquetación automatizada de productos de la nueva generación de satélites **GOES-19 (East)**, optimizados específicamente para el territorio del Estado Plurinacional de Bolivia.
 
 El proyecto nace con el objetivo de dotar a los pronosticadores del **SENAMHI** de productos visuales con un estándar de diseño unificado, colineal y de alta definición, eliminando la dependencia de servidores externos y procesando los datos directamente de la fuente cruda (*NetCDF L2 MCMIPF* de la NOAA). 
 
@@ -17,7 +36,7 @@ Los productos también pueden ser compartidos en redes sociales, dependiendo del
 
 ---
 
-## 🎨 Catálogo de Productos Operativos (Versión 1.0)
+## Catálogo de Productos Operativos
 
 A continuación se detallan los cuatro productos desarrollados bajo el estándar unificado del SENAMHI:
 
@@ -31,23 +50,25 @@ A continuación se detallan los cuatro productos desarrollados bajo el estándar
 * **Propósito:** Análisis de la dinámica de la alta troposfera, identificación de corrientes en chorro (Jet Streams), localización de vaguadas/dorsales y detección de zonas de subsidencia seca o advección de humedad.
 * **Especificaciones Técnicas:** Calibrado en Temperatura de Brillo (°C) utilizando una escala de realce estándar que resalta las masas de aire extremadamente secas y frías en niveles altos (típicamente entre 100 y 450 hPa). La escala térmica oscila de manera óptima entre $-70^\circ\text{C}$ (humedad profunda/topes nubosos altos) hasta $-20^\circ\text{C}$ (aire seco descendente).
 * **Simbología:** Barra de escala de realce térmico de humedad unificada en el borde inferior.
+![Producto Vapor de Agua](assets/goes19_vapordeagua.png)
 
 ### 3. Day Snow-Fog RGB (Multiespectral)
 * **Propósito:** Distinción inequívoca de mantos de nieve en la Cordillera de los Andes frente a nubes bajas de agua y niebla en los valles del norte y los llanos.
-* **Especificaciones Técnicas:** Basado en el estándar físico internacional de la NOAA/CIRA. 
+* **Especificaciones Técnicas:** Basado en el estándar físico internacional de la NOAA. 
     * *Nieve:* Rojo-Naranja brillante.
     * *Nubes de agua/Niebla:* Amarillo pastel.
     * *Nubes altas de hielo (Cirros):* Rosa profundo.
 * **Simbología:** Leyenda inferior perfectamente adaptada con la paleta de clasificación multiespectral.
+![Producto Day Snow-Fog](assets/goes19_snowfog.png)
 
-### 4. Color Verdadero Mejorado (True Color Enhanced - Estilo CIRA)
-* **Propósito:** Monitoreo diurno de coberturas de suelo, cuerpos de agua, calidad del aire e incendios forestales mediante una visualización intuitiva cercana a la percepción del ojo humano.
+### 4. Color Verdadero
+* **Propósito:** Monitoreo diurno de coberturas de suelo, cuerpos de agua, nubosidad, incendios forestales mediante una visualización intuitiva cercana a la percepción del ojo humano.
 * **Especificaciones Técnicas:** Reconstrucción del canal verde simulado mediante el canal de clorofila (Banda 3 - Veggie), aplicando una **Corrección Atmosférica de Rayleigh simplificada** en el canal azul para remover la neblina gris de la atmósfera y un estiramiento dinámico por percentiles libres de nulos (`nanpercentile`).
 * **Simbología:** Leyenda corporativa inferior indexada para Nubes, Vegetación, Suelo Descubierto, Afloramientos y Cuerpos de Agua.
-
+![Producto Color Verdadero](assets/goes19_colorverdadero.png)
 ---
 
-## 📐 Estándar de Diseño y Maquetación Unificado
+## Estándar de Diseño y Maquetación Unificado
 
 Todos los scripts comparten una arquitectura de renderizado simétrico que garantiza el estándar del SENAMHI:
 
@@ -60,9 +81,9 @@ Todos los scripts comparten una arquitectura de renderizado simétrico que garan
 
 ---
 
-## 🛠️ Requisitos e Instalación
+## Requisitos e Instalación
 
-La suite está construida enteramente sobre un entorno de programación en Python, compatible con sistemas operativos de servidores meteorológicos (Linux/UNIX):
+La suite está construida enteramente sobre un entorno de programación en Python.
 
 ```bash
 # Dependencias científicas principales
