@@ -9,10 +9,22 @@ procesados/
 .DS_Store
 .AppleDouble
 .LSOverride
+.lsdb
+Icon?
 
 # Icon must end with two \r
 Icon
 
+# Geospatial data or cache
+raw_data/
+procesados/
+*.nc
+
+#Virtual Enviroments and Python cache
+__pycache__/
+*.py[cod]
+.venv/
+env/
 
 # Thumbnails
 ._*
