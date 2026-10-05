@@ -7,18 +7,42 @@ encontrar, ordenar y descargar escenas MCMIP Full Disk de NOAA.
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Iterable
 
 import s3fs
+import xarray as xr
 
 
 _PATRON_INICIO = re.compile(
     r"_s(?P<year>\d{4})(?P<doy>\d{3})(?P<hour>\d{2})"
     r"(?P<minute>\d{2})(?P<second>\d{2})\d"
 )
+
+
+def _crear_s3fs() -> s3fs.S3FileSystem:
+    """Crea una conexión NOAA tolerante a descargas Full Disk extensas."""
+    return s3fs.S3FileSystem(
+        anon=True,
+        config_kwargs={
+            "connect_timeout": 30,
+            "read_timeout": 300,
+            "retries": {"max_attempts": 5, "mode": "standard"},
+        },
+    )
+
+
+def _es_escena_abi_valida(archivo: Path) -> bool:
+    """Comprueba que un archivo local sea un NetCDF4 ABI abrible por xarray."""
+    try:
+        with xr.open_dataset(archivo, engine="netcdf4") as dataset:
+            bandas_requeridas = {"CMI_C03", "CMI_C05", "CMI_C07", "CMI_C13"}
+            return bandas_requeridas.issubset(dataset.variables)
+    except Exception:
+        return False
 
 
 @dataclass(frozen=True, order=True)
@@ -76,7 +100,7 @@ def listar_escenas_mcmipf(
 
     fin = _como_utc(fecha_fin)
     inicio = fin - timedelta(hours=duracion_horas)
-    filesystem = fs or s3fs.S3FileSystem(anon=True)
+    filesystem = fs or _crear_s3fs()
 
     rutas: set[str] = set()
     for hora in _horas_entre(inicio, fin):
@@ -104,17 +128,65 @@ def descargar_escenas(
     directorio_destino: str | Path,
     *,
     fs: s3fs.S3FileSystem | None = None,
+    reintentos: int = 4,
+    pausa_inicial_segundos: int = 8,
 ) -> list[Path]:
-    """Descarga solo escenas que no estén ya disponibles en disco."""
+    """Descarga escenas completas y reintenta ante fallos transitorios de red.
+
+    Cada descarga usa un archivo temporal ``.part``. Solo se convierte en el
+    NetCDF final después de validar su tamaño contra el objeto publicado por
+    NOAA, por lo que una descarga interrumpida no queda como archivo reutilizable.
+    """
+    if reintentos < 1:
+        raise ValueError("reintentos debe ser al menos 1.")
     destino = Path(directorio_destino)
     destino.mkdir(parents=True, exist_ok=True)
-    filesystem = fs or s3fs.S3FileSystem(anon=True)
+    filesystem = fs or _crear_s3fs()
     locales: list[Path] = []
 
     for escena in escenas:
         archivo_local = destino / escena.nombre_archivo
-        if not archivo_local.exists():
-            filesystem.get(escena.ruta_s3, str(archivo_local))
+        tamano_remoto = filesystem.info(escena.ruta_s3).get("size")
+        archivo_completo = (
+            archivo_local.exists()
+            and (tamano_remoto is None or archivo_local.stat().st_size == tamano_remoto)
+            and _es_escena_abi_valida(archivo_local)
+        )
+
+        if not archivo_completo:
+            archivo_temporal = archivo_local.with_suffix(archivo_local.suffix + ".part")
+
+            for intento in range(1, reintentos + 1):
+                archivo_temporal.unlink(missing_ok=True)
+                try:
+                    print(
+                        f"Descargando {escena.nombre_archivo} "
+                        f"(intento {intento}/{reintentos})..."
+                    )
+                    filesystem.get(escena.ruta_s3, str(archivo_temporal))
+
+                    if tamano_remoto is not None and archivo_temporal.stat().st_size != tamano_remoto:
+                        raise IOError(
+                            "La descarga terminó con un tamaño distinto al publicado por NOAA."
+                        )
+                    if not _es_escena_abi_valida(archivo_temporal):
+                        raise IOError(
+                            "La descarga no contiene una escena NetCDF4 ABI válida."
+                        )
+
+                    archivo_temporal.replace(archivo_local)
+                    break
+                except Exception as error:
+                    archivo_temporal.unlink(missing_ok=True)
+                    if intento == reintentos:
+                        raise ConnectionError(
+                            f"No se pudo descargar {escena.nombre_archivo} tras "
+                            f"{reintentos} intentos."
+                        ) from error
+
+                    espera = pausa_inicial_segundos * (2 ** (intento - 1))
+                    print(f"Descarga interrumpida; reintentando en {espera} segundos...")
+                    time.sleep(espera)
         locales.append(archivo_local)
 
     return locales

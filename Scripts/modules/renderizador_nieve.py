@@ -41,7 +41,7 @@ def renderizar_producto_nieve(
     ruta_salida.parent.mkdir(parents=True, exist_ok=True)
     path_logos = Path(path_logos)
 
-    with xr.open_dataset(ruta_netcdf) as ds:
+    with xr.open_dataset(ruta_netcdf, engine="netcdf4") as ds:
         proyeccion = ds.goes_imager_projection.attrs
         height = proyeccion["perspective_point_height"]
         lon_0 = proyeccion["longitude_of_projection_origin"]
@@ -133,7 +133,7 @@ def renderizar_producto_nieve(
     string_utc = fecha_utc.strftime("%d/%m/%Y %H:%M (Hora UTC)")
     string_bot = fecha_bot.strftime("%d/%m/%Y %H:%M (Hora Bolivia)")
     ax.set_title(
-        f"Identificación de Nieve — {subtitulo_final} [Fuente: GOES-19]\\n"
+        f"Identificación de Nieve — {subtitulo_final} [Fuente: GOES-19]\n"
         f"{string_bot} — {string_utc}",
         fontsize=12.5, fontweight="bold", pad=14, loc="center", linespacing=1.3,
     )
