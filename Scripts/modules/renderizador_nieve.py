@@ -57,8 +57,13 @@ def renderizar_producto_nieve(
         ch07_raw = ds["CMI_C07"].values.astype(float)
         ch13_raw = ds["CMI_C13"].values.astype(float)
 
-        ch03_pct = ch03_raw if np.nanmax(ch03_raw) > 1.0 else ch03_raw * 100.0
-        ch05_pct = ch05_raw if np.nanmax(ch05_raw) > 1.0 else ch05_raw * 100.0
+        # C03 y C05 llegan como reflectancia adimensional (unidad "1"), incluso
+        # cuando algunos píxeles superan 1 por efectos geométricos/atmosféricos.
+        # No debe inferirse la unidad con el máximo de la escena: eso reducía R y
+        # G cien veces en escenas con valores > 1 y el RGB quedaba artificialmente
+        # azul. La receta RAMMB-CIRA usa reflectancia expresada en porcentaje.
+        ch03_pct = ch03_raw * 100.0
+        ch05_pct = ch05_raw * 100.0
 
         rojo = np.power(np.clip(ch03_pct / 100.0, 0, 1), 1.0 / 1.7)
         verde = np.power(np.clip(ch05_pct / 70.0, 0, 1), 1.0 / 1.7)
